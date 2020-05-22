@@ -4,7 +4,7 @@ all: runproject
 some_file: runproject
 
 runproject:
-	python data_prepro.py models.py train.py clean.py predict.py
+	python data_prepro.py clean.py train.py predict.py
 
 clean:
 	rm -f runproject
