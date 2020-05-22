@@ -26,10 +26,10 @@ def make_prediction(args):
     results = []
 
     for z, wav_fn in tqdm(enumerate(wav_paths), total=len(wav_paths)):
-        #rate, wav = downsample_mono(wav_fn, args.sr)
         try:
             rate, wav = downsample_mono(src_fn, args.sr)
         except:
+            print('Error with downsampling')
             continue
         mask, env = envelope(wav, rate, threshold=args.threshold)
         clean_wav = wav[mask]
@@ -49,23 +49,7 @@ def make_prediction(args):
         y_mean = np.mean(y_pred, axis=0)
         y_pred = np.argmax(y_mean)
         results.append(y_mean)
-
-    np.save(os.path.join('logs', args.pred_fn), np.array(results))
-
-
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(description='Audio Classification Training')
-    parser.add_argument('--model_fn', type=str, default='models/lstm.h5',
-                        help='model file to make predictions')
-    parser.add_argument('--pred_fn', type=str, default='y_pred',
-                        help='fn to write predictions in logs dir')
-    parser.add_argument('--dt', type=float, default=1.0,
-                        help='time in seconds to sample audio')
-    parser.add_argument('--sr', type=int, default=16000,
-                        help='sample rate of clean audio')
-    parser.add_argument('--threshold', type=str, default=20,
-                        help='threshold magnitude for np.int16 dtype')
-    args, _ = parser.parse_known_args()
-
-    make_prediction(args)
+    
+    #np.save(os.path.join('logs', args.pred_fn), np.array(results))
+    return np.array(results)
+    

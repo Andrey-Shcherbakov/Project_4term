@@ -7,8 +7,7 @@ import numpy as np
 import pandas as pd
 from librosa.core import resample
 from tqdm import tqdm
-#import wavfile as wf24b
-#import wavio
+
 
 
 def envelope(y, rate, threshold):
@@ -26,12 +25,8 @@ def envelope(y, rate, threshold):
 
 
 def downsample_mono(path, sr):
-    #print('reading at:', path)
-    rate, wav = wavfile.read(path)  # <- NOT OK (24 bit) [fixed]
-    #rate, wav, botch = wf24b.read(path)  <- NOT OK (>1 dim)
-    #rate, wav = wavio.readwav(path)  # OK [but unknown format]
-    #wav = resample(wav.astype(np.float32), rate, sr)  <- NOT OK
-    wav = resample(np.asfortranarray(wav.astype(np.float32)), rate, sr)  # OK
+    rate, wav = wavfile.read(path)  
+    wav = resample(np.asfortranarray(wav.astype(np.float32)), rate, sr) 
     wav = wav.astype(np.int16)
     # checks stereo and converts to mono if nessesary
     try:
@@ -115,27 +110,3 @@ def test_threshold(args):
     plt.show()
 
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(description='Cleaning audio data')
-    parser.add_argument('--src_root', type=str, default='wavfiles',
-                        help='directory of audio files in total duration')
-    parser.add_argument('--dst_root', type=str, default='clean',
-                        help='directory to put audio files split by delta_time')
-    parser.add_argument('--delta_time', '-dt', type=float, default=1.0,
-                        help='time in seconds to sample audio')
-    parser.add_argument('--sr', type=int, default=16000,
-                        help='rate to downsample audio')
-
-    parser.add_argument('--fn', type=str, default='100032-3-0-0',
-                        help='file to plot over time to check magnitude')
-    parser.add_argument('--threshold', type=str, default=20,
-                        help='threshold magnitude for np.int16 dtype')
-    args, _ = parser.parse_known_args()
-    try:
-        test_threshold(args)
-    except:
-        print('Input signal too small')
-    split_wavs(args)
-        
-    print('='*10+'\nDone')
