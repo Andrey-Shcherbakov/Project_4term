@@ -1,12 +1,19 @@
-import matplotlib.pyplot as plt
-from scipy.io import wavfile
-import argparse
-import os
-from glob import glob
-import numpy as np
-import pandas as pd
-from librosa.core import resample
-from tqdm import tqdm
+try:
+    import matplotlib.pyplot as plt
+    from scipy.io import wavfile
+    import argparse
+    import os
+    from glob import glob
+    import numpy as np
+    import pandas as pd
+    from librosa.core import resample
+    from tqdm import tqdm
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 #import wavfile as wf24b
 #import wavio
 

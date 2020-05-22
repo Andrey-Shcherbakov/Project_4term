@@ -1,15 +1,21 @@
-from tensorflow.keras.models import load_model
-from clean import downsample_mono, envelope
-from kapre.time_frequency import Melspectrogram
-from kapre.utils import Normalization2D
-from sklearn.preprocessing import LabelEncoder
-import numpy as np
-from glob import glob
-import argparse
-import os
-import pandas as pd
-from tqdm import tqdm
-
+try:
+    from tensorflow.keras.models import load_model
+    from clean import downsample_mono, envelope
+    from kapre.time_frequency import Melspectrogram
+    from kapre.utils import Normalization2D
+    from sklearn.preprocessing import LabelEncoder
+    import numpy as np
+    from glob import glob
+    import argparse
+    import os
+    import pandas as pd
+    from tqdm import tqdm
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 
 def make_prediction(args):
 

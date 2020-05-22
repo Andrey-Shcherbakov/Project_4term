@@ -1,11 +1,18 @@
-from tensorflow.keras import layers
-from tensorflow.keras.layers import TimeDistributed
-from tensorflow.keras.models import Model
-from tensorflow.keras.regularizers import l2
-from kapre.time_frequency import Melspectrogram
-from kapre.utils import Normalization2D
-import tensorflow as tf
-import os
+try:
+    from tensorflow.keras import layers
+    from tensorflow.keras.layers import TimeDistributed
+    from tensorflow.keras.models import Model
+    from tensorflow.keras.regularizers import l2
+    from kapre.time_frequency import Melspectrogram
+    from kapre.utils import Normalization2D
+    import tensorflow as tf
+    import os
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 
 
 N_CLASSES = len(os.listdir('wavfiles'))

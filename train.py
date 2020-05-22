@@ -1,17 +1,24 @@
-import tensorflow as tf
-from tensorflow.keras.callbacks import CSVLogger, ModelCheckpoint
-from tensorflow.keras.utils import to_categorical
-import os
-from scipy.io import wavfile
-import pandas as pd
-import numpy as np
-from sklearn.utils.class_weight import compute_class_weight
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
-from models import Conv1D, Conv2D, LSTM
-from tqdm import tqdm
-from glob import glob
-import argparse
+try:
+    import tensorflow as tf
+    from tensorflow.keras.callbacks import CSVLogger, ModelCheckpoint
+    from tensorflow.keras.utils import to_categorical
+    import os
+    from scipy.io import wavfile
+    import pandas as pd
+    import numpy as np
+    from sklearn.utils.class_weight import compute_class_weight
+    from sklearn.preprocessing import LabelEncoder
+    from sklearn.model_selection import train_test_split
+    from models import Conv1D, Conv2D, LSTM
+    from tqdm import tqdm
+    from glob import glob
+    import argparse
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 
 
 class DataGenerator(tf.keras.utils.Sequence):

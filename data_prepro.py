@@ -1,15 +1,26 @@
-import os
-import pandas as pd
-import shutil
-import soundfile
-from tqdm import tqdm
+try:
+    import os
+    import pandas as pd
+    import shutil
+    import soundfile
+    from tqdm import tqdm
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 
 try:
     os.mkdir('wavfiles/')
 except FileExistsError:
     print('wavfiles dir exists')
 
-df_info = pd.read_csv('UrbanSound8K.csv')
+try:
+    df_info = pd.read_csv('UrbanSound8K.csv')
+except FileNotFoundError:
+    print('Please, install UrbanSound8K.csv from https://urbansounddataset.weebly.com/urbansound8k.html')
+    exit(1)
 
 classes = [
     'air_conditioner',
@@ -27,7 +38,7 @@ for classname in classes:
     try:
         os.mkdir('wavfiles/'+str(classname)+'/')
     except FileExistsError:
-        print(f'{classname} dir exists')
+        print('{classname} dir exists')
         
 for filename, fold, classname in tqdm(zip(df_info['slice_file_name'], 
                                           df_info['fold'], 
