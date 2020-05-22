@@ -1,10 +1,17 @@
-import librosa
-from pysndfx import AudioEffectsChain
-import numpy as np
-import math
-import python_speech_features
-import scipy as sp
-from scipy import signal
+try:
+    import librosa
+    from pysndfx import AudioEffectsChain
+    import numpy as np
+    import math
+    import python_speech_features
+    import scipy as sp
+    from scipy import signal
+except ImportError as error:
+    if(error.__class__.__name__ == 'ModuleNotFoundError'):
+         print(error.__class__.__name__ + ' please install '+ error.name)
+    else:
+        print(error.__class__.__name__ + ": " + error.message + " : please, install it")
+    exit(1)
 
 
 
