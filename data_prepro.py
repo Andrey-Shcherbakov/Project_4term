@@ -27,7 +27,7 @@ for classname in classes:
     try:
         os.mkdir('wavfiles/'+str(classname)+'/')
     except FileExistsError:
-        print(f'{classname} dir exists')
+        print('{classname} dir exists')
         
 for filename, fold, classname in tqdm(zip(df_info['slice_file_name'], 
                                           df_info['fold'], 
